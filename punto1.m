@@ -8,13 +8,13 @@ C = [0 1 0 0];
 D = 0;
 
 sis = ss(A,B,C,D);
-polos = [-9 -9.2 -9.4 -9.6];
+polos = [-9.1 -9.2 -9.4 -9.6];
 K=place(A,B,polos); %acker
 Alc=A-B*K
 sistemaLC=ss(Alc,B,C,D);
 
 %f=1/dcgain(sistemaLC) %no se utiliza porque el límite tiende a cero y
-%sería f=inf
+%el precompensador sería f=inf
 %sistemaLCn=f*sistemaLC;
 Ts=minreal(zpk(sistemaLC)) %se comprueba
 figure(1)
@@ -22,9 +22,9 @@ step(sistemaLC)
 grid on
 
 %%
-C2 = [0 0 1 0];  %revisar
+C_ang = [0 0 1 0];  %revisar
 
-tsys = ss(Alc,B,C2,D);
+tsys = ss(Alc,B,C_ang,D);
 
 figure(2)
 step(sistemaLC);
