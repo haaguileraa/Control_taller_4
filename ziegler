@@ -1,0 +1,48 @@
+clear 
+clc
+s=tf('s');
+G1 = 1/(s+5)^5;
+%G1=tf([1 3], [1 5 9 5])
+%G1= 1/(s+1)^3;
+%G1 = tf([-1.5 1 ], [1 1]);
+%% magnitud
+
+figure(1)
+step(G1,'r')
+title('Respuesta al paso de G1')
+grid on
+dt=0.05;
+t=0:dt:8;
+y=step(G1,t)';
+dy=diff(y)/dt;
+[m,p]=max(dy);
+yi=y(p);
+ti=t(p);
+L=ti-yi/m;
+T=(y(end)-yi)/m+ti-L;
+a=L/T;
+Kp=1.2/a
+Ti=2*L;
+Td=0.5*L;
+Ki=Kp/Ti
+Kd=Kp*Td
+
+C=(Kd*s^2+Kp*s+Ki)/s;
+
+
+Tlc=feedback(C*G1,1)
+figure(2)
+step(Tlc)
+
+%% Frecuencia 
+k=8000;
+L=G1*k;
+TTT=feedback(L,1)
+figure(3)
+step(TTT)
+
+figure(4)
+nyquist(TTT)
+
+
+

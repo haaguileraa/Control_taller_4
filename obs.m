@@ -10,10 +10,10 @@ D = 0;
 
 %% Controlable y observable?
 nn= rank(A)
-wc = [B A*B (A^2)*B]
+wc = [B A*B A*A*B A*A*A*B]
 nwc=rank(wc)
 
-w0 = [C; C*A; C*(A^2) ]
+w0 = [C; C*A; C*A*A; C*A*A*A]
 nw0=rank(w0)
 
 %%
